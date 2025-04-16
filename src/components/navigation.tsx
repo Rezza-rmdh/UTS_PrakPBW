@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, LogOut, LogIn } from 'lucide-react';
@@ -9,14 +8,14 @@ import { cn } from '@/lib/utils';
 const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const location = useLocation();
-  const { isAuthenticated, logout, user } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   
   const navItems = [
     { path: '/', label: 'Home' },
-    { path: '/todo-list', label: 'Tasks' },
-    { path: '/about', label: 'About' },
+    { path: '/todo-list', label: 'Tugas' },
+    { path: '/about', label: 'Tentang kami' },
   ];
   
   return (
@@ -50,9 +49,6 @@ const Navigation: React.FC = () => {
 
               {isAuthenticated ? (
                 <div className="flex items-center space-x-3">
-                  <span className="text-sm font-medium text-muted-foreground">
-                    {user?.name}
-                  </span>
                   <Button 
                     variant="outline" 
                     size="sm"
@@ -108,10 +104,6 @@ const Navigation: React.FC = () => {
             
             {isAuthenticated ? (
               <div className="pt-4 pb-3 border-t border-border">
-                <div className="px-3 py-2">
-                  <p className="text-sm font-medium">{user?.name}</p>
-                  <p className="text-xs text-muted-foreground">{user?.email}</p>
-                </div>
                 <Button 
                   variant="outline" 
                   size="sm"

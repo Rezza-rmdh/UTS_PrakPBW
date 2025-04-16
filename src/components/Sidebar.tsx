@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
     <div className="h-screen flex flex-col bg-sidebar text-sidebar-foreground w-64 border-r border-sidebar-border p-4">
       {/* App Logo */}
       <div className="flex items-center justify-center py-6">
-        <h1 className="text-2xl font-bold text-primary">Kampus Task Master</h1>
+        <h1 className="text-2xl font-bold text-primary">Tugasin</h1>
       </div>
       
       {/* User Profile */}
