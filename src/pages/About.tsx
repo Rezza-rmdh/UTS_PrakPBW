@@ -51,41 +51,46 @@ const features = [
 const About: React.FC = () => {
   return (
     <PageLayout>
-      <div className="relative py-16 px-4">
-        {/* Decorative Background */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-indigo-50 via-white to-white dark:from-slate-900 dark:via-slate-950 dark:to-black" />
+      <div className="relative py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-50 via-white to-violet-100 dark:from-slate-900 dark:via-slate-950 dark:to-black" />
+        <div className="absolute inset-0 -z-20 pointer-events-none opacity-10 bg-[radial-gradient(circle,_#8b5cf6_1px,_transparent_1px)] [background-size:20px_20px]" />
 
-        <motion.div initial="hidden" animate="show" variants={fadeIn}>
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">About Tugasin</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Membantu mahasiswa mengelola tugas dan deadline dengan lebih baik.
+        {/* Header Section */}
+        <motion.div initial="hidden" animate="show" variants={fadeIn} className="text-center mb-16">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent mb-4">
+            Tentang Tugasin
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Membantu mahasiswa mengelola tugas dan deadline dengan lebih baik.
+          </p>
+        </motion.div>
+
+        {/* Mission Section */}
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={fadeIn}
+          className="max-w-4xl mx-auto mb-20"
+        >
+          <h2 className="text-2xl font-bold mb-6 text-center text-primary">Kami Punya Misi Nih 🎯</h2>
+          <div className="bg-muted/40 p-6 rounded-2xl shadow-lg">
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Tugasin dibuat buat bantu mahasiswa ngadepin ribetnya hidup kuliah. Kami ngerti banget gimana pusingnya ngatur jadwal kuliah, tugas, proyek, dan aktivitas organisasi. Misi kami simpel: sediakan tools yang gampang dipakai tapi tetap powerful — biar hidup kuliah kamu lebih rapi, produktif, dan gak gampang stres.
             </p>
           </div>
         </motion.div>
 
-        <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeIn}>
-          <div className="mb-12 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6 text-center">Kami Punya Misi Nih 🎯</h2>
-            <div className="bg-muted p-6 rounded-xl shadow-md">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Tugasin dibuat buat bantu mahasiswa ngadepin ribetnya hidup kuliah. Kami ngerti banget gimana pusingnya ngatur jadwal kuliah, tugas, proyek, dan aktivitas organisasi. Misi kami simpel: sediakan tools yang gampang dipakai tapi tetap powerful — biar hidup kuliah kamu lebih rapi, produktif, dan gak gampang stres.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="mb-16">
-          <motion.h2
-            className="text-2xl font-bold mb-8 text-center"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            variants={fadeIn}
-          >
-            Fitur Unggulan 🌟
-          </motion.h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {/* Features Section */}
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={fadeIn}
+          className="mb-24"
+        >
+          <h2 className="text-2xl font-bold mb-10 text-center text-primary">Fitur Unggulan 🌟</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -94,26 +99,33 @@ const About: React.FC = () => {
                 whileInView="show"
                 viewport={{ once: true }}
               >
-                <div className="bg-card border rounded-lg p-6 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+                <div className="bg-card border rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1">
                   <div className="mb-4">{feature.icon}</div>
-                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
+                  <h3 className="text-xl font-semibold mb-2 text-primary">{feature.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
                 </div>
               </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <motion.div className="mb-16" initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeIn}>
-          <h2 className="text-2xl font-bold mb-6 text-center">Kenapa Ini Penting Buat Mahasiswa?</h2>
+        {/* Why Important Section */}
+        <motion.div
+          className="mb-20"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={fadeIn}
+        >
+          <h2 className="text-2xl font-bold mb-10 text-center text-primary">Kenapa Ini Penting Buat Mahasiswa?</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <div className="bg-card border rounded-lg p-6 shadow-sm hover:shadow-md transition duration-200">
+            <div className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-200">
               <h3 className="text-xl font-medium mb-4">Biar Kuliah Gak Bikin Stress</h3>
               <p>
                 Dengan gambaran tugas dan deadline yang jelas, kamu bisa atur waktu belajar tanpa panik. Gak ada lagi SKS dadakan — kamu jadi lebih tenang dan produktif!
               </p>
             </div>
-            <div className="bg-card border rounded-lg p-6 shadow-sm hover:shadow-md transition duration-200">
+            <div className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-200">
               <h3 className="text-xl font-medium mb-4">Biar Waktu Gak Kebuang Percuma</h3>
               <p>
                 Sistem prioritas bantu kamu fokus ke hal-hal penting, dan pelacak deadline bikin kamu selalu on track. Waktu belajar jadi lebih efisien dan hasilnya maksimal.
@@ -122,7 +134,14 @@ const About: React.FC = () => {
           </div>
         </motion.div>
 
-        <motion.div className="text-center text-muted-foreground" initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeIn}>
+        {/* Footer Quote */}
+        <motion.div
+          className="text-center text-muted-foreground"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={fadeIn}
+        >
           <p className="italic">“Tugasin — Dibuat untuk mahasiswa, oleh mahasiswa.”</p>
         </motion.div>
       </div>
