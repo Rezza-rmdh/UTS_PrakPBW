@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 
 import { Button } from '@/components/ui/button';
@@ -20,34 +19,46 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const formSchema = z.object({
+  name: z.string().min(3, 'Name must be at least 3 characters'),
   email: z.string().email('Please enter a valid email'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
-const Login: React.FC = () => {
-  const { login, isAuthenticated } = useAuth();
+const Register: React.FC = () => {
+  const { register, login } = useAuth();
   const navigate = useNavigate();
-
-  // Redirect to /home if user is authenticated
-  React.useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/home');
-    }
-  }, [isAuthenticated, navigate]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: '',
       email: '',
       password: '',
     },
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    const success = await login(data.email, data.password);
-    if (success) {
-      // After successful login, redirect to the home page
-      navigate('/home');
+    try {
+      // Handle registration
+      const success = await register(data.name, data.email, data.password);
+      if (success) {
+        // If registration is successful, log the user in
+        const loginSuccess = await login(data.email, data.password);
+        if (loginSuccess) {
+          // Redirect to home page after successful login
+          navigate('/home');
+        } else {
+          // Handle login failure
+          alert('Login failed. Please check your credentials.');
+        }
+      } else {
+        // Handle registration failure
+        alert('Registration failed. Please try again.');
+      }
+    } catch (error) {
+      // Catch any errors during registration or login process
+      console.error(error);
+      alert('An error occurred. Please try again later.');
     }
   };
 
@@ -56,14 +67,25 @@ const Login: React.FC = () => {
       <div className="flex justify-center items-center min-h-[70vh]">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Login</CardTitle>
-            <CardDescription>
-              Enter your credentials to access your tasks
-            </CardDescription>
+            <CardTitle className="text-2xl">Register</CardTitle>
+            <CardDescription>Create an account to get started</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your Name" {...field} autoComplete="name" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="email"
@@ -71,13 +93,12 @@ const Login: React.FC = () => {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="student@example.com" {...field} autoComplete="email" />
+                        <Input placeholder="Email" {...field} autoComplete="email" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                
                 <FormField
                   control={form.control}
                   name="password"
@@ -85,30 +106,17 @@ const Login: React.FC = () => {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input type="password" placeholder="••••••••" {...field} autoComplete="current-password" />
+                        <Input type="password" placeholder="Password" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                
-                <Button type="submit" className="w-full mt-6" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? 'Logging in...' : 'Login'}
+                <Button type="submit" className="w-full mt-6">
+                  Register
                 </Button>
               </form>
             </Form>
-            
-            <div className="mt-4 text-center text-sm text-muted-foreground">
-              <p>Demo credentials:</p>
-              <p>Email: student@example.com</p>
-              <p>Password: password</p>
-            </div>
-
-            <div className="mt-4 text-center">
-              <Link to="/register" className="text-sm text-blue-600">
-                Don't have an account? Register here
-              </Link>
-            </div>
           </CardContent>
         </Card>
       </div>
@@ -116,4 +124,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;

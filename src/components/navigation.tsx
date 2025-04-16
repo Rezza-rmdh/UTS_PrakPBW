@@ -13,7 +13,7 @@ const Navigation: React.FC = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   
   const navItems = [
-    { path: '/', label: 'Home' },
+    { path: '/home', label: 'Home' },
     { path: '/todo-list', label: 'Tugas' },
     { path: '/about', label: 'Tentang kami' },
   ];
